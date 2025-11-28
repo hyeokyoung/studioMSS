@@ -18,32 +18,40 @@
             padding-top: 5vh;
         }
 
-        /* 기차 레일 */
+        /* 기차 레일 (Flex 컨테이너) */
         .marquee-row {
             white-space: nowrap; font-size: 0; margin-bottom: 3vh; display: flex; width: max-content;
         }
         
-        /* 속도 조절: 숫자가 클수록 느림 (취향껏 조절 가능) */
-        .row-1 { animation: scroll-left 150s linear infinite; }
-        .row-2 { animation: scroll-left 170s linear infinite; }
-        .row-3 { animation: scroll-left 190s linear infinite; }
+        /* === [수정됨] 속도 조절: 숫자를 5배 이상 키워서 아주 느리게 === */
+        .row-1 { animation: scroll-left 150s linear infinite; } /* 150초 */
+        .row-2 { animation: scroll-left 170s linear infinite; } /* 170초 */
+        .row-3 { animation: scroll-left 190s linear infinite; } /* 190초 */
 
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         .marquee-row:hover { animation-play-state: paused; }
 
-        /* 이미지 박스 */
+        /* 이미지 박스 (Flex 아이템) */
         .img-box {
-            flex: 0 0 auto; position: relative;
+            flex: 0 0 auto; /* 크기 고정, 줄어들지 않음 */
+            position: relative;
             width: 25vh; height: 25vh; margin-right: 2vh;
             overflow: hidden;
         }
 
-        .img-base { width: 100%; height: 100%; object-fit: cover; display: block; }
+        /* === [수정됨] 이미지 꽉 채우기 === */
+        .img-base {
+            width: 100%; height: 100%;
+            object-fit: cover; /* 비율 유지하며 꽉 채움 */
+            display: block;    /* [중요] 박스 전체를 차지하도록 설정 */
+        }
         
         /* 검은 박스 (호버) */
         .img-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; opacity: 0; transition: opacity 0.3s ease; z-index: 10;
+            object-fit: cover;
+            display: block;    /* [중요] 여기도 추가 */
+            opacity: 0; transition: opacity 0.3s ease; z-index: 10;
         }
         .img-box:hover .img-overlay { opacity: 1; }
 
