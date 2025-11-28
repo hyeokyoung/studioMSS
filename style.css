@@ -22,35 +22,35 @@ header {
     border-bottom: 1px solid #000; 
 }
 
-/* 로고 */
+/* 로고 (가장 두껍게: 800) */
 .brand-name { 
     font-family: 'Pretendard', sans-serif; font-weight: 800; font-size: 1.5rem; 
     color: #000; cursor: pointer; white-space: nowrap; 
     flex: 1; 
 }
 
-/* 메뉴 (두껍게 수정됨) */
+/* 메뉴 (중간 두께: 500으로 수정) */
 .filter-menu { 
     display: flex; gap: 30px; 
     flex: 1; justify-content: center; 
 }
 .filter-btn { 
     font-family: 'Pretendard', sans-serif; font-size: 1rem; 
-    font-weight: 500; /* [수정] 500 -> 700 (더 두껍게) */  /* [재수정] 700 -> 500 */
+    font-weight: 500; /* [수정] 700 -> 500 (적당한 두께) */
     cursor: pointer; color: #000; text-decoration: none;
 }
 .filter-btn:hover { text-decoration: underline; }
 .filter-btn.active { text-decoration: underline; font-weight: 900; }
 
-/* 날짜 (회색/얇게 통일) */
+/* 날짜 (가장 얇게: 400 + 회색) */
 .date-text { 
     font-family: 'Pretendard', sans-serif; 
-    font-size: 0.9rem; /* 크기 살짝 줄임 */
-    font-weight: 400; /* [수정] 얇게 */
-    color: #999;      /* [수정] 연한 회색 (브랜드 통일) */
+    font-size: 0.9rem; 
+    font-weight: 400; 
+    color: #999;      
     white-space: nowrap; 
     flex: 1; text-align: right; 
-    letter-spacing: 0.05em; /* 자간 추가 */
+    letter-spacing: 0.05em; 
 }
 
 /* 2. 하단 (설명글) */
@@ -72,7 +72,7 @@ header {
     word-break: keep-all; text-align: justify;
 }
 
-/* 모바일 대응 (레이아웃만 변경, 색상/폰트는 위에서 정의한 것 그대로 유지) */
+/* 모바일 대응 */
 @media (max-width: 768px) {
     header { padding: 0 1.2rem; }
     
@@ -89,13 +89,12 @@ header {
     .filter-menu { 
         flex: auto; width: 100%; justify-content: center; gap: 20px; 
     }
-    .filter-btn { font-size: 0.95rem; } /* 모바일에서 폰트 사이즈 미세 조정 */
+    .filter-btn { font-size: 0.95rem; } 
 
     .date-text { 
         flex: auto; width: 100%; text-align: center; 
         font-size: 0.75rem; 
         margin-top: 5px; 
-        /* 색상(#999)과 굵기(400)는 위에서 상속받음 -> PC와 동일 */
     }
     
     .header-bottom { flex-direction: column; gap: 15px; align-items: flex-start; padding: 1rem 0; }
