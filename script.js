@@ -350,16 +350,21 @@ filterBy('All');
 // ============================================================
 function toggleDescription() {
     const wrapper = document.getElementById('desc-wrapper');
-    const toggle = wrapper.querySelector('.header-desc-toggle');
-    
-    if (wrapper.classList.contains('expanded')) {
-        wrapper.classList.remove('expanded');
-        toggle.textContent = '소개 보기';
-    } else {
-        wrapper.classList.add('expanded');
-        toggle.textContent = '소개 접기';
-    }
+    wrapper.classList.toggle('expanded');
 }
+
+// 모바일에서 wrapper 클릭 시 토글
+document.addEventListener('DOMContentLoaded', function() {
+    const wrapper = document.getElementById('desc-wrapper');
+    if (wrapper) {
+        wrapper.addEventListener('click', function(e) {
+            // 모바일에서만 동작 (768px 이하)
+            if (window.innerWidth <= 768) {
+                toggleDescription();
+            }
+        });
+    }
+});
 
 // ============================================================
 // [ABOUT MODAL] About Us 모달

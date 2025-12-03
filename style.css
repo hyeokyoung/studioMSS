@@ -4,18 +4,24 @@
 
 /* === Global Reset === */
 * { box-sizing: border-box; }
-html { 
-    margin: 0; padding: 0; width: 100%; height: 100%; background: #fff; 
-    /* iOS 전체 페이지 스크롤 방지 */
-    overflow: hidden;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-}
+html { margin: 0; padding: 0; width: 100%; height: 100%; background: #fff; }
 body { 
     margin: 0; padding: 0; width: 100%; height: 100%; background: #fff;
     display: flex; flex-direction: column; overflow: hidden;
-    /* iOS overscroll 방지 */
-    overscroll-behavior: none;
+}
+
+/* 모바일: 스크롤 허용 */
+@media (max-width: 768px) {
+    html, body {
+        height: auto;
+        min-height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+    }
+    body {
+        display: block;
+    }
 }
 
 /* === Header System === */
@@ -115,38 +121,50 @@ header {
     }
     
     .header-bottom { flex-direction: column; gap: 10px; align-items: flex-start; padding: 1rem 0; }
-    .header-subtitle { width: 100%; margin-bottom: 0; font-size: 1rem; }
+    .header-subtitle { display: none; }
     
-    /* 모바일 설명 접기/펼치기 */
-    .header-desc-wrapper { width: 100%; }
+    /* 모바일 설명 그라디언트 숨김 */
+    .header-desc-wrapper { 
+        width: 100%; 
+        position: relative;
+        cursor: pointer;
+    }
     
     .header-desc { 
-        width: 100%; font-size: 0.8rem; line-height: 1.5; color: #555; 
-        max-height: 0;
+        width: 100%; 
+        font-size: 0.8rem; 
+        line-height: 1.5; 
+        color: #555; 
+        max-height: 2.4em; /* 약 2줄 */
         overflow: hidden;
         transition: max-height 0.3s ease;
+        position: relative;
+    }
+    
+    /* 그라디언트 오버레이 (아래로 페이드) */
+    .header-desc::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1.5em;
+        background: linear-gradient(to bottom, transparent, #fff);
+        pointer-events: none;
+        transition: opacity 0.3s ease;
     }
     
     .header-desc-wrapper.expanded .header-desc {
         max-height: 500px;
     }
     
+    .header-desc-wrapper.expanded .header-desc::after {
+        opacity: 0;
+    }
+    
+    /* 토글 버튼 숨김 */
     .header-desc-toggle {
-        display: block;
-        font-family: 'Pretendard', sans-serif;
-        font-size: 0.8rem;
-        color: #999;
-        cursor: pointer;
-        padding: 5px 0;
-    }
-    
-    .header-desc-toggle::after {
-        content: ' ▼';
-        font-size: 0.6rem;
-    }
-    
-    .header-desc-wrapper.expanded .header-desc-toggle::after {
-        content: ' ▲';
+        display: none;
     }
     
     /* 모바일 박스 폰트 크기 축소 */
@@ -156,8 +174,15 @@ header {
     .caption-box { padding: 8px; }
     .box-container { margin-right: 8px; }
     
+    /* 모바일: wrapper 고정 높이 */
+    .full-screen-wrapper {
+        height: 55vh;
+        min-height: 280px;
+        flex: none;
+    }
+    
     /* 모바일: 터치 스크롤 개선 */
-    .marquee-row { touch-action: pan-y; }
+    .marquee-row { touch-action: pan-x; }
 }
 
 /* === Footer (하단 헤더) === */
