@@ -139,27 +139,41 @@ class InertiaMarquee {
             }
         });
 
-        // --- 모바일 터치 이벤트 ---
+        // --- 모바일 터치 이벤트 (iOS Safari 대응) ---
         this.el.addEventListener('touchstart', (e) => {
             this.isDragging = true;
             this.startX = e.touches[0].pageX;
+            this.startY = e.touches[0].pageY;
             this.lastX = this.currentPos;
             this.lastMouseX = e.touches[0].pageX;
             this.velocity = 0;
-        });
+            this.isHorizontalSwipe = null;
+        }, { passive: true });
 
         this.el.addEventListener('touchmove', (e) => {
             if (!this.isDragging) return;
-            const diff = e.touches[0].pageX - this.startX;
-            this.currentPos = this.lastX + diff;
             
-            this.velocity = e.touches[0].pageX - this.lastMouseX;
-            this.lastMouseX = e.touches[0].pageX;
-        });
+            const diffX = e.touches[0].pageX - this.startX;
+            const diffY = e.touches[0].pageY - this.startY;
+            
+            // 첫 움직임에서 수평/수직 판단
+            if (this.isHorizontalSwipe === null) {
+                this.isHorizontalSwipe = Math.abs(diffX) > Math.abs(diffY);
+            }
+            
+            // 수평 스와이프일 때만 마키 이동
+            if (this.isHorizontalSwipe) {
+                e.preventDefault();
+                this.currentPos = this.lastX + diffX;
+                this.velocity = e.touches[0].pageX - this.lastMouseX;
+                this.lastMouseX = e.touches[0].pageX;
+            }
+        }, { passive: false });
 
         this.el.addEventListener('touchend', () => {
             this.isDragging = false;
-        });
+            this.isHorizontalSwipe = null;
+        }, { passive: true });
     }
 
     animate() {
