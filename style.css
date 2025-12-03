@@ -4,8 +4,13 @@
 
 /* === Global Reset === */
 * { box-sizing: border-box; }
-body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #fff; overflow: hidden; }
-body { display: flex; flex-direction: column; }
+body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: #fff; }
+body { display: flex; flex-direction: column; overflow: hidden; }
+
+/* 모바일에서는 스크롤 허용 */
+@media (max-width: 768px) {
+    body { overflow: auto; overflow-x: hidden; }
+}
 
 /* === Header System === */
 header {
